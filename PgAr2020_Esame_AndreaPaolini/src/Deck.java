@@ -1,12 +1,10 @@
 import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Set;
 import java.util.Stack;
 
 public class Deck {
 
 
-    private ArrayList<Card> allCards = new ArrayList<>();
+    private ArrayList<Card> currentDeck = new ArrayList<>();
     private Stack<Card> discardPile = new Stack<>();
 
     public Stack<Card> getDiscardPile() {
@@ -17,12 +15,12 @@ public class Deck {
         this.discardPile = discardPile;
     }
 
-    public ArrayList<Card> getAllCards() {
-        return allCards;
+    public ArrayList<Card> getCurrentDeck() {
+        return currentDeck;
     }
 
-    public void setAllCards(ArrayList<Card> allCards) {
-        this.allCards = allCards;
+    public void setCurrentDeck(ArrayList<Card> currentDeck) {
+        this.currentDeck = currentDeck;
     }
 
 }

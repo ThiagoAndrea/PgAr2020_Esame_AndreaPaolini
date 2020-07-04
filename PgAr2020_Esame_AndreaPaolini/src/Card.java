@@ -7,9 +7,9 @@ public class Card {
 
     @Override
     public String toString() {
-        return "Card{" +
-                "colour='" + colour + '\'' +
-                ", number=" + number +
+        return "{" +
+                "'" + colour + '\'' +
+                ", " + number +
                 '}';
     }
 
