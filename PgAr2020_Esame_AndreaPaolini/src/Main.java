@@ -4,24 +4,72 @@ public class Main {
         InputOutput input = new InputOutput();
         Deck deck = new Deck();
         Game match = new Game();
+        Utility util = new Utility();
         Player player1 = new Player();
         Player player2 = new Player();
+        Player firstPlayer;
+        Player secondPlayer;
 
-        input.initReader("Uno_Gi_OhConPescaDue.xml");
-        input.readXML(deck.getCurrentDeck());
-        match.shuffleDeck(deck);
+        //Istruzioni
+        util.start();
+        //Inserimento del nome dei giocatore, se sono uguali, rifare.
+        do {
+            System.out.println(Utility.FIRST_PLAYER_NAME);
+            player1.setNickname(util.readStringFromKeyboard());
+            System.out.println(Utility.SECOND_PLAYER_NAME);
+            player2.setNickname(util.readStringFromKeyboard());
+        } while (player1.getNickname().equalsIgnoreCase(player2.getNickname()));
 
-        for (Card evalCard : deck.getCurrentDeck()) {
+        //Scelta del mazzo
+        deck.whichDeck();
+        for (Card evalCard: deck.getCurrentDeck()
+             ) {
             System.out.println(evalCard.toString());
         }
 
-        match.cardsDeliver(deck, player1, player2);
-        match.firstCard(deck);
-        System.out.println(player1.getHand().toString());
-        System.out.println(player2.getHand().toString());
-        System.out.println("mazzo degli scarti: " + deck.getDiscardPile().peek());
+        //Scelta del primo giocatore
+        int player1Dice;
+        int player2Dice;
+        do {
+            player1Dice = player1.rollADice();
+            System.out.println(player1.getNickname() + Utility.ROLL_A_DICE);
+            util.next();
+            System.out.println(player1Dice);
+            util.next();
+            player2Dice = player2.rollADice();
+            System.out.println(player2.getNickname() + Utility.ROLL_A_DICE);
+            util.next();
+            System.out.println(player2Dice);
+        } while (player1Dice == player2Dice);
+        if (player1Dice > player2Dice) {
+            firstPlayer = player1;
+            secondPlayer = player2;
+        } else {
+            firstPlayer = player2;
+            secondPlayer = player1;
+        }
 
-        Card chosenCard = player1.chooseACard();
-        System.out.println("La carta scelta è " + chosenCard);
+        System.out.println(Utility.FIRST_PLAYER + firstPlayer.getNickname());
+        util.next();
+
+        //Inizio partita
+        match.shuffleDeck(deck);
+        match.cardsDeliver(deck, firstPlayer, secondPlayer);
+        match.firstCard(deck);
+
+        System.out.println("Carta in tavola: " + deck.getDiscardPile().peek());
+
+        //Scommesse
+        firstPlayer.printHand();
+        boolean bet1 = firstPlayer.wannaBet();
+        if(bet1) firstPlayer.bet(secondPlayer, deck);
+        boolean bet2 = secondPlayer.wannaBet();
+        if(bet2) secondPlayer.bet(firstPlayer, deck);
+
+        match.battle(firstPlayer, secondPlayer, deck);
+        if (firstPlayer.getHand().size() == 0) {
+            System.out.println(Utility.THE_WINNER_IS + firstPlayer.getNickname());
+        } else
+            System.out.println(Utility.THE_WINNER_IS + secondPlayer.getNickname());
     }
 }

@@ -12,7 +12,11 @@ public class InputOutput {
     XMLInputFactory xmlif = null;
     XMLStreamReader xmlr = null;
 
-
+    /**
+     * Inizializzatore di un file xml
+     *
+     * @param nome_file nome del file che si vuole inizializzare
+     */
     public void initReader(String nome_file) {
 
         try {
@@ -23,9 +27,11 @@ public class InputOutput {
         }
     }
 
-
-
-
+    /**
+     * Lettore dell'xml
+     *
+     * @param deck salva i dati raccolti nel deck
+     */
     public void readXML(ArrayList<Card> deck) {
         try {
             String evalcolour = null;
@@ -40,7 +46,7 @@ public class InputOutput {
                         for (int i = 0; i < xmlr.getAttributeCount(); i++) {
                             if ("numerodicarte".equals(xmlr.getAttributeLocalName(i))) {
                                 cards = new Card[Integer.parseInt(xmlr.getAttributeValue(i))];
-                                for(int m=0; m<cards.length; m++) //Inizializzo il vettore di tutte le carte
+                                for (int m = 0; m < cards.length; m++) //Inizializzo il vettore di tutte le carte
                                     cards[m] = new Card();
                             }
                         }
@@ -69,5 +75,6 @@ public class InputOutput {
         }
 
     }
+
 
 }
