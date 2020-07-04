@@ -2,6 +2,9 @@ import java.awt.*;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
+/**
+ * Classe per ogni evenienza. Qui tutte le costanti e metodi che si riferiscono alla tastiera.
+ */
 public class Utility {
 
     public static final String WHICH_DECK = "Quale mazzo volete utilizzare? Selezionare uno dei seguenti:\n0 -> nucleoBase\n1 -> Uno_Gi_OhConPescaDue" +
@@ -22,6 +25,7 @@ public class Utility {
     public static final String WANNA_BET = " premi 1 se vuoi scommettere, 0 altrimenti:";
     public static final String FAIL = "Scommessa persa! Pesca una carta.";
     public static final String CARD_ON_TABLE = "La carta in tavola è: ";
+    public static final String SKIPPED = "Mi spiace, salti il turno. ";
     public static final String RIGHTBET = "Complimenti! Hai vinto la scommessa!";
     public static final String INTRODUCTION = "Benvenuti al tavolo di Uno-Gi-Oh!\nLe regole di questo gioco sono molto semplici, e sono basate sul tipico gioco Uno, famoso in tutto\n" +
             "il mondo. Un paio di regole in più: a inizio partita c'è la possibilità di scommettere: potete indicare una carta che pensate che il vostro avversario abbia in mano;\n" +
@@ -68,7 +72,7 @@ public class Utility {
     }
 
     public String readStringFromKeyboard(){
-        String name = null;
+        String name;
         boolean good = false;
         do {
             name = reader.nextLine();

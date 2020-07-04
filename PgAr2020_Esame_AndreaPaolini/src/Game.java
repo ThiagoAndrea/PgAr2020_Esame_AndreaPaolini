@@ -1,5 +1,8 @@
 import java.util.Collections;
 
+/**
+ * Classe fulcro del programma: gestisce le interazioni tra il banco e i giocatori
+ */
 public class Game {
 
     Utility util = new Utility();
@@ -49,9 +52,7 @@ public class Game {
      * @return true se hanno stesso valore, false altrimenti
      */
     public boolean sameColour(Card card1, Card card2) {
-        if (card1.getColour().equalsIgnoreCase(card2.getColour()))
-            return true;
-        else return false;
+        return card1.getColour().equalsIgnoreCase(card2.getColour());
     }
 
     /**
@@ -62,9 +63,7 @@ public class Game {
      * @return true se hanno lo stesso valore, false altrimenti
      */
     public boolean sameValue(Card card1, Card card2) {
-        if (card1.getNumber().equalsIgnoreCase(card2.getNumber()))
-            return true;
-        else return false;
+        return card1.getNumber().equalsIgnoreCase(card2.getNumber());
     }
 
 
@@ -76,9 +75,7 @@ public class Game {
      * @return vero se la partita è finita, falso altrimenti
      */
     public boolean victory(Player player1, Player player2) {
-        if (player1.getHand().size() == 0 || player2.getHand().size() == 0) {
-            return true;
-        } else return false;
+        return player1.getHand().size() == 0 || player2.getHand().size() == 0;
     }
 
     /**
@@ -87,7 +84,7 @@ public class Game {
      * @param player giocatore di turno
      * @param deck   mazzo utilizzato
      */
-    public void turn(Player player, Deck deck) {
+    public void turn(Player player, Player nextPlayer, Deck deck) {
         System.out.println(player.getNickname() + Utility.YOUR_TURN);
         util.next();
         boolean doSomething = false;
@@ -111,6 +108,14 @@ public class Game {
 
                 } while (!sameValue(chosenCard, cardFacedUp) && !sameColour(chosenCard, cardFacedUp));
                 player.discard(chosenCard, deck);
+                if (chosenCard.getNumber().equalsIgnoreCase("PescaDue")) { //Se pesca due carte, l'avversario si ferma per un turno
+                    nextPlayer.draw(deck);
+                    nextPlayer.draw(deck);
+                    nextPlayer.setSkipTurn(true);
+                }
+                else if(chosenCard.getNumber().equalsIgnoreCase("Stop")){ //Se giochi la carta stop, l'avversario salta il turno
+                    nextPlayer.setSkipTurn(true);
+                }
                 count = 1;
             } else {
                 if (count == 0) { //Devo pescare la carta solo se non l'ho ancora fatto all'interno del mio turno
@@ -137,13 +142,26 @@ public class Game {
     public void battle(Player player1, Player player2, Deck deck) {
         do {
             System.out.println(Utility.CARD_ON_TABLE + deck.getDiscardPile().peek());
-            turn(player1, deck);
+            if(!player1.getSkipTurn()) {
+                turn(player1, player2, deck);
+            }
+            else{
+                System.out.println(Utility.SKIPPED);
+                player1.setSkipTurn(false);
+            }
             util.next();
             if (player1.getHand().size() == 0)
                 break;
             System.out.println(Utility.CARD_ON_TABLE + deck.getDiscardPile().peek());
+
             util.next();
-            turn(player2, deck);
+            if(!player1.getSkipTurn()) {
+                turn(player2, player1, deck);
+            }
+            else{
+                System.out.println(Utility.SKIPPED);
+                player2.setSkipTurn(false);
+            }
             if (player2.getHand().size() == 0)
                 break;
             util.next();

@@ -1,13 +1,25 @@
 import java.util.ArrayList;
 import java.util.Random;
 
+/**
+ * Classe che mi rappresenta il giocatore; caratterizzato da un nome, una mano di carte e il fatto che possa giocare il proprio turno
+ */
 public class Player {
 
     private String nickname;
     private ArrayList<Card> hand = new ArrayList<>();
-
+    private boolean skipTurn = false;
 
     Utility util = new Utility();
+
+    public boolean getSkipTurn() {
+        return skipTurn;
+    }
+
+    public void setSkipTurn(boolean skipTurn) {
+        this.skipTurn = skipTurn;
+    }
+
     Game match = new Game();
 
     public String getNickname() {
@@ -29,9 +41,6 @@ public class Player {
         return hand;
     }
 
-    public void setHand(ArrayList<Card> hand) {
-        this.hand = hand;
-    }
 
     /**
      * Metodo che ti permette di scegliere una carta dalla tua mano
@@ -99,12 +108,11 @@ public class Player {
     /**
      * Metodo che tira un dado per decretare il primo giocatore
      *
-     * @return
+     * @return valore del dado
      */
     public int rollADice() {
         Random generator = new Random();
-        int d = 1 + generator.nextInt(6);
-        return d;
+        return 1 + generator.nextInt(6);
     }
 
     /**

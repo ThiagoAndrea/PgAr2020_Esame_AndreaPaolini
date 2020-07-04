@@ -22,10 +22,6 @@ public class Main {
 
         //Scelta del mazzo
         deck.whichDeck();
-        for (Card evalCard: deck.getCurrentDeck()
-             ) {
-            System.out.println(evalCard.toString());
-        }
 
         //Scelta del primo giocatore
         int player1Dice;
@@ -63,6 +59,7 @@ public class Main {
         firstPlayer.printHand();
         boolean bet1 = firstPlayer.wannaBet();
         if(bet1) firstPlayer.bet(secondPlayer, deck);
+        secondPlayer.printHand();
         boolean bet2 = secondPlayer.wannaBet();
         if(bet2) secondPlayer.bet(firstPlayer, deck);
 

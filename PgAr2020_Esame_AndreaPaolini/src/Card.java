@@ -1,3 +1,6 @@
+/**
+ * Classe che mi definisce le caratteristiche di una carta
+ */
 public class Card {
 
 
@@ -8,8 +11,8 @@ public class Card {
     @Override
     public String toString() {
         return "{" +
-                "" + number + " " +
-                ", " + colour +
+                "" + colour + " " +
+                ", " + number +
                 '}';
     }
 

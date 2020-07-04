@@ -4,8 +4,10 @@ import javax.xml.stream.XMLStreamReader;
 import java.io.FileInputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Queue;
-import java.util.Set;
+
+/**
+ * Classe che mi gestisce la lettura dei file xml
+ */
 
 public class InputOutput {
 
