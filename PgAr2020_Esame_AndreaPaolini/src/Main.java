@@ -21,6 +21,7 @@ public class Main {
         System.out.println(player2.getHand().toString());
         System.out.println("mazzo degli scarti: " + deck.getDiscardPile().peek());
 
-
+        Card chosenCard = player1.chooseACard();
+        System.out.println("La carta scelta è " + chosenCard);
     }
 }
